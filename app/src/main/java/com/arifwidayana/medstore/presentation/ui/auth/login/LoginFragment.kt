@@ -39,7 +39,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
                     is Resource.Empty -> {}
                     is Resource.Loading -> {}
                     is Resource.Success -> {
-                        moveNav(R.id.action_loginFragment_to_registerFragment)
+                        moveNav(R.id.action_loginFragment_to_productFragment)
                     }
                     is Resource.Error -> {
                         showMessageSnackBar(true, exception = it.exception )

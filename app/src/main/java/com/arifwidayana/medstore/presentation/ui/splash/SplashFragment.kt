@@ -28,7 +28,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, SplashViewModel>(
                     when(it.data) {
                         true -> {
                             Handler(Looper.getMainLooper()).postDelayed({
-                                moveNav(R.id.action_splashFragment_to_loginFragment)
+                                moveNav(R.id.action_splashFragment_to_productFragment)
                             }, 3000)
                         }
                         else -> {
