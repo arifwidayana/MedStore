@@ -1,7 +1,8 @@
-package com.arifwidayana.medstore
+package com.arifwidayana.medstore.presentation.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.arifwidayana.medstore.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
