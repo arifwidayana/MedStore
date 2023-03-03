@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">MedStore</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="sign_in">Sign In</string>
+    <string name="product">Product</string>
+    <string name="supplier">Supplier</string>
+    <string name="register">Register</string>
+    <string name="name">Name</string>
+    <string name="no_have_account">Didn`t Have Account? <b><font color='#D7B05C'>Register</font></b></string>
 </resources>
