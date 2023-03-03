@@ -1,7 +1,6 @@
 package com.arifwidayana.medstore.di
 
 import android.content.Context
-import androidx.room.Room
 import com.arifwidayana.medstore.common.base.BaseGenericViewModel
 import com.arifwidayana.medstore.data.local.datasource.UserPreferenceDatasource
 import com.arifwidayana.medstore.data.local.datasource.UserPreferenceDatasourceImpl
@@ -9,12 +8,19 @@ import com.arifwidayana.medstore.data.local.repository.UserPreferenceRepository
 import com.arifwidayana.medstore.data.local.repository.UserPreferenceRepositoryImpl
 import com.arifwidayana.medstore.data.network.datasource.AuthDatasource
 import com.arifwidayana.medstore.data.network.datasource.AuthDatasourceImpl
+import com.arifwidayana.medstore.data.network.datasource.ProductDatasource
+import com.arifwidayana.medstore.data.network.datasource.ProductDatasourceImpl
 import com.arifwidayana.medstore.data.network.repository.AuthRepository
 import com.arifwidayana.medstore.data.network.repository.AuthRepositoryImpl
+import com.arifwidayana.medstore.data.network.repository.ProductRepository
+import com.arifwidayana.medstore.data.network.repository.ProductRepositoryImpl
 import com.arifwidayana.medstore.data.network.service.AuthService
+import com.arifwidayana.medstore.data.network.service.ProductService
 import com.arifwidayana.medstore.presentation.ui.auth.login.LoginViewModel
 import com.arifwidayana.medstore.presentation.ui.auth.register.RegisterViewModel
+import com.arifwidayana.medstore.presentation.ui.product.ProductViewModel
 import com.arifwidayana.medstore.presentation.ui.splash.SplashViewModel
+import com.arifwidayana.medstore.presentation.ui.supplier.SupplierViewModel
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import dagger.Module
 import dagger.Provides
@@ -41,11 +47,14 @@ object MainModule {
             return AuthService.invoke(chuckerInterceptor)
         }
 
-//        @Provides
-//        @Singleton
-//        fun provideInfoService(chuckerInterceptor: ChuckerInterceptor): InfoService {
-//            return InfoService.invoke(chuckerInterceptor)
-//        }
+        @Provides
+        @Singleton
+        fun provideProductService(
+            chuckerInterceptor: ChuckerInterceptor,
+            userPreferenceRepository: UserPreferenceRepository
+        ): ProductService {
+            return ProductService.invoke(chuckerInterceptor, userPreferenceRepository)
+        }
     }
 
     @Module
@@ -63,11 +72,11 @@ object MainModule {
             return AuthDatasourceImpl(authService)
         }
 
-//        @Provides
-//        @Singleton
-//        fun provideInfoDatasource(infoService: InfoService): InfoDatasource {
-//            return InfoDatasourceImpl(infoService)
-//        }
+        @Provides
+        @Singleton
+        fun provideProductDatasource(productService: ProductService): ProductDatasource {
+            return ProductDatasourceImpl(productService)
+        }
     }
 
     @Module
@@ -83,6 +92,12 @@ object MainModule {
         @Singleton
         fun provideAuthRepository(authDatasource: AuthDatasource): AuthRepository {
             return AuthRepositoryImpl(authDatasource)
+        }
+
+        @Provides
+        @Singleton
+        fun provideProductRepository(productDatasource: ProductDatasource): ProductRepository {
+            return ProductRepositoryImpl(productDatasource)
         }
     }
 
@@ -121,12 +136,20 @@ object MainModule {
             )
         }
 
-//        @Provides
-//        @FragmentScoped
-//        fun provideFavoriteViewModel(favoriteRepository: FavoriteRepository): FavoriteViewModel {
-//            return BaseGenericViewModel(FavoriteViewModel(favoriteRepository)).create(
-//                FavoriteViewModel::class.java
-//            )
-//        }
+        @Provides
+        @FragmentScoped
+        fun provideProductViewModel(productRepository: ProductRepository): ProductViewModel {
+            return BaseGenericViewModel(ProductViewModel(productRepository)).create(
+                ProductViewModel::class.java
+            )
+        }
+
+        @Provides
+        @FragmentScoped
+        fun provideSupplierViewModel(productRepository: ProductRepository): SupplierViewModel {
+            return BaseGenericViewModel(SupplierViewModel(productRepository)).create(
+                SupplierViewModel::class.java
+            )
+        }
     }
 }
