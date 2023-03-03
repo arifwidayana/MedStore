@@ -61,7 +61,7 @@ interface ProductService {
                         val token = tokenResponse.data
                         if (!token.isNullOrEmpty()) {
                             requestBuilder.addHeader(
-                                name = "Authorizations",
+                                name = "Authorization",
                                 value = "Bearer $token"
                             )
                         }
