@@ -10,29 +10,22 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.POST
 import java.util.concurrent.TimeUnit
 
 interface AuthService {
     @POST("auth/login")
-    suspend fun loginUser(loginRequest: LoginRequest): BaseResponse<LoginResponse>
+    suspend fun loginUser(@Body loginRequest: LoginRequest): BaseResponse<LoginResponse>
 
     @POST("auth/register")
-    suspend fun registerUser(registerRequest: RegisterRequest): BaseResponse<RegisterResponse>
+    suspend fun registerUser(@Body registerRequest: RegisterRequest): BaseResponse<RegisterResponse>
 
     companion object {
         @JvmStatic
         operator fun invoke(chuckerInterceptor : ChuckerInterceptor): AuthService{
             val okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(chuckerInterceptor)
-//                .addInterceptor {
-//                    val req = it.request()
-//                    val query = req.url
-//                        .newBuilder()
-//                        .addQueryParameter(API_NAME, BuildConfig.API_KEY)
-//                        .build()
-//                    return@addInterceptor it.proceed(req.newBuilder().url(query).build())
-//                }
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
                 .build()
