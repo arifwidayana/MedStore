@@ -8,4 +8,7 @@ object Constant {
     // Index
     const val DEFAULT_INDEX_PAGE = 1
     const val NETWORK_PAGE_SIZE = 10
+
+    // Status
+    const val USERNAME_IS_REGISTERED = "USERNAME IS REGISTERED"
 }
