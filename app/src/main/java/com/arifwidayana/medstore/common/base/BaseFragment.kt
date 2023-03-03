@@ -55,16 +55,22 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     override fun showErrorContent(isVisible: Boolean) {}
     override fun showLoading(isVisible: Boolean) {}
 
-    override fun showMessageToast(isEnabled: Boolean, message: String?) {
+    override fun showMessageToast(isEnabled: Boolean, message: String?, exception: Exception?) {
         when {
+            exception != null -> {
+                Toast.makeText(requireContext(), exception.message, Toast.LENGTH_SHORT).show()
+            }
             isEnabled -> {
                 Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    override fun showMessageSnackBar(isEnabled: Boolean, message: String?) {
+    override fun showMessageSnackBar(isEnabled: Boolean, message: String?, exception: Exception?) {
         when {
+            exception != null -> {
+                Snackbar.make(binding.root, exception.message.toString(), Snackbar.LENGTH_SHORT).show()
+            }
             isEnabled -> {
                 Snackbar.make(binding.root, message.toString(), Snackbar.LENGTH_SHORT).show()
             }
