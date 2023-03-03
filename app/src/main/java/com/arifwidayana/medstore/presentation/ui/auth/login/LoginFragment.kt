@@ -26,6 +26,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
                     )
                 )
             }
+            tvRegister.setOnClickListener {
+                moveNav(R.id.action_loginFragment_to_registerFragment)
+            }
         }
     }
 

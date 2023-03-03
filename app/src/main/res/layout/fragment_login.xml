@@ -78,6 +78,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/til_password" />
 
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/no_have_account"
+            android:textSize="@dimen/content"
+            app:layout_constraintEnd_toEndOf="@id/btn_login"
+            app:layout_constraintStart_toStartOf="@id/btn_login"
+            app:layout_constraintTop_toBottomOf="@id/btn_login"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
