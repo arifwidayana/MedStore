@@ -7,7 +7,9 @@ import com.arifwidayana.medstore.common.wrapper.Resource
 import com.arifwidayana.medstore.data.network.model.request.supplier.SupplierParamRequest
 import com.arifwidayana.medstore.data.network.model.response.supplier.SupplierParamResponse
 import com.arifwidayana.medstore.databinding.FragmentDetailSupplierBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailSupplierFragment : BaseFragment<FragmentDetailSupplierBinding, DetailSupplierViewModel>(
     FragmentDetailSupplierBinding::inflate
 ) {
