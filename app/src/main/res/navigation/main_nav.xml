@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
     app:startDestination="@id/splashFragment">
@@ -9,7 +9,7 @@
         android:id="@+id/splashFragment"
         android:name="com.arifwidayana.medstore.presentation.ui.splash.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
+        tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_splashFragment_to_loginFragment"
             app:destination="@id/loginFragment"
@@ -25,7 +25,7 @@
         android:id="@+id/loginFragment"
         android:name="com.arifwidayana.medstore.presentation.ui.auth.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
@@ -44,10 +44,59 @@
         android:id="@+id/productFragment"
         android:name="com.arifwidayana.medstore.presentation.ui.product.ProductFragment"
         android:label="fragment_product"
-        tools:layout="@layout/fragment_product" />
+        tools:layout="@layout/fragment_product" >
+        <action
+            android:id="@+id/action_productFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/productFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_productFragment_to_detailProductFragment"
+            app:destination="@id/detailProductFragment" />
+        <action
+            android:id="@+id/action_productFragment_to_addProductFragment"
+            app:destination="@id/addProductFragment" />
+    </fragment>
     <fragment
         android:id="@+id/supplierFragment"
         android:name="com.arifwidayana.medstore.presentation.ui.supplier.SupplierFragment"
         android:label="fragment_supplier"
-        tools:layout="@layout/fragment_supplier" />
+        tools:layout="@layout/fragment_supplier" >
+        <action
+            android:id="@+id/action_supplierFragment_to_detailSupplierFragment"
+            app:destination="@id/detailSupplierFragment" />
+        <action
+            android:id="@+id/action_supplierFragment_to_addSupplierFragment"
+            app:destination="@id/addSupplierFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailProductFragment"
+        android:name="com.arifwidayana.medstore.presentation.ui.product.detail.DetailProductFragment"
+        android:label="fragment_detail_product"
+        tools:layout="@layout/fragment_detail_product" >
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailSupplierFragment"
+        android:name="com.arifwidayana.medstore.presentation.ui.supplier.detail.DetailSupplierFragment"
+        android:label="fragment_detail_supplier"
+        tools:layout="@layout/fragment_detail_supplier" >
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/addProductFragment"
+        android:name="com.arifwidayana.medstore.presentation.ui.product.add.AddProductFragment"
+        android:label="fragment_add_product"
+        tools:layout="@layout/fragment_add_product" />
+    <fragment
+        android:id="@+id/addSupplierFragment"
+        android:name="com.arifwidayana.medstore.presentation.ui.supplier.add.AddSupplierFragment"
+        android:label="fragment_add_supplier"
+        tools:layout="@layout/fragment_add_supplier" />
 </navigation>
