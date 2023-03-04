@@ -1,9 +1,14 @@
 package com.arifwidayana.medstore.presentation.ui.product
 
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.arifwidayana.medstore.common.base.BaseFragment
+import com.arifwidayana.medstore.common.wrapper.Resource
 import com.arifwidayana.medstore.databinding.FragmentProductBinding
+import com.arifwidayana.medstore.presentation.adapter.ProductAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProductFragment : BaseFragment<FragmentProductBinding, ProductViewModel>(
     FragmentProductBinding::inflate
 ) {
@@ -13,7 +18,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding, ProductViewModel>(
     }
 
     private fun onView() {
-//        viewModel
+        viewModel.getProduct()
     }
 
     private fun onClick() {
@@ -23,8 +28,31 @@ class ProductFragment : BaseFragment<FragmentProductBinding, ProductViewModel>(
     }
 
     override fun observeData() {
-//        lifecycleScope.launchWhenCreated {
-//
-//        }
+        lifecycleScope.launchWhenCreated {
+            viewModel.getProductResult.asLiveData().observe(viewLifecycleOwner) {
+                when (it) {
+                    is Resource.Empty -> {}
+                    is Resource.Loading -> {}
+                    is Resource.Success -> {
+                        setStateProduct(it.data)
+                    }
+                    is Resource.Error -> {
+                        showMessageSnackBar(true, exception = it.exception, message = it.message)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setStateProduct(data: ProductDataResult?) {
+        binding.apply {
+            data?.let {
+                val adapter = ProductAdapter { res ->
+                    showMessageSnackBar(true, res.toString())
+                }
+                adapter.submitData(lifecycle, it)
+                rvProduct.adapter = adapter
+            }
+        }
     }
 }
