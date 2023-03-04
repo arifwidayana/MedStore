@@ -20,6 +20,7 @@
     <string name="supplier_name">Supplier Name</string>
     <string name="supplier_address">Supplier Address</string>
     <string name="supplier_phone_number">Supplier Phone Number</string>
+    <string name="phone_number">Phone Number</string>
     <string name="stock">Stock</string>
     <string name="submit">Submit</string>
     <string name="add_product">Add Product</string>

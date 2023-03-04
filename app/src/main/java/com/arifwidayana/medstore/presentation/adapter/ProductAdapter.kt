@@ -19,7 +19,13 @@ class ProductAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: ProductDataset) {
             binding.apply {
-                id.text = data.id.toString()
+                tvProductId.text = data.id.toString()
+                tvProductName.text = data.productName
+                tvPrice.text = data.price.toString()
+                tvStock.text = data.stock.toString()
+                tvSupplierName.text = data.supplier.supplierName
+                tvPhoneNumber.text = data.supplier.phoneNumber
+                tvAddress.text = data.supplier.address
 
                 btnEdit.setOnClickListener {
                     onClick.invoke(data.id)

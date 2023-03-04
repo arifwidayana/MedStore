@@ -6,7 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.arifwidayana.medstore.data.network.model.response.supplier.SupplierParamResponse
-import com.arifwidayana.medstore.databinding.ItemProductBinding
+import com.arifwidayana.medstore.databinding.ItemSupplierBinding
 
 typealias SupplierDataset = SupplierParamResponse
 
@@ -15,11 +15,14 @@ class SupplierAdapter(
 ) : PagingDataAdapter<SupplierDataset, SupplierAdapter.SupplierViewHolder>(DIFF_CALLBACK) {
 
     inner class SupplierViewHolder(
-        private val binding: ItemProductBinding
+        private val binding: ItemSupplierBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: SupplierDataset) {
             binding.apply {
-                id.text = data.supplierId.toString()
+                tvProductId.text = data.supplierId.toString()
+                tvProductName.text = data.supplierName
+                tvPhone.text = data.supplierPhoneNumber
+                tvAddress.text = data.supplierAddress
 
                 btnEdit.setOnClickListener {
                     onClick.invoke(data.supplierId)
@@ -35,7 +38,7 @@ class SupplierAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SupplierViewHolder {
-        val binding = ItemProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemSupplierBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SupplierViewHolder(binding)
     }
 
