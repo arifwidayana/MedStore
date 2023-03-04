@@ -6,21 +6,20 @@ import com.arifwidayana.medstore.data.local.datasource.UserPreferenceDatasource
 import com.arifwidayana.medstore.data.local.datasource.UserPreferenceDatasourceImpl
 import com.arifwidayana.medstore.data.local.repository.UserPreferenceRepository
 import com.arifwidayana.medstore.data.local.repository.UserPreferenceRepositoryImpl
-import com.arifwidayana.medstore.data.network.datasource.AuthDatasource
-import com.arifwidayana.medstore.data.network.datasource.AuthDatasourceImpl
-import com.arifwidayana.medstore.data.network.datasource.ProductDatasource
-import com.arifwidayana.medstore.data.network.datasource.ProductDatasourceImpl
-import com.arifwidayana.medstore.data.network.repository.AuthRepository
-import com.arifwidayana.medstore.data.network.repository.AuthRepositoryImpl
-import com.arifwidayana.medstore.data.network.repository.ProductRepository
-import com.arifwidayana.medstore.data.network.repository.ProductRepositoryImpl
+import com.arifwidayana.medstore.data.network.datasource.*
+import com.arifwidayana.medstore.data.network.repository.*
 import com.arifwidayana.medstore.data.network.service.AuthService
 import com.arifwidayana.medstore.data.network.service.ProductService
+import com.arifwidayana.medstore.data.network.service.SupplierService
 import com.arifwidayana.medstore.presentation.ui.auth.login.LoginViewModel
 import com.arifwidayana.medstore.presentation.ui.auth.register.RegisterViewModel
 import com.arifwidayana.medstore.presentation.ui.product.ProductViewModel
+import com.arifwidayana.medstore.presentation.ui.product.add.AddProductViewModel
+import com.arifwidayana.medstore.presentation.ui.product.detail.DetailProductViewModel
 import com.arifwidayana.medstore.presentation.ui.splash.SplashViewModel
 import com.arifwidayana.medstore.presentation.ui.supplier.SupplierViewModel
+import com.arifwidayana.medstore.presentation.ui.supplier.add.AddSupplierViewModel
+import com.arifwidayana.medstore.presentation.ui.supplier.detail.DetailSupplierViewModel
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import dagger.Module
 import dagger.Provides
@@ -55,6 +54,15 @@ object MainModule {
         ): ProductService {
             return ProductService.invoke(chuckerInterceptor, userPreferenceRepository)
         }
+
+        @Provides
+        @Singleton
+        fun provideSupplierService(
+            chuckerInterceptor: ChuckerInterceptor,
+            userPreferenceRepository: UserPreferenceRepository
+        ): SupplierService {
+            return SupplierService.invoke(chuckerInterceptor, userPreferenceRepository)
+        }
     }
 
     @Module
@@ -76,6 +84,12 @@ object MainModule {
         @Singleton
         fun provideProductDatasource(productService: ProductService): ProductDatasource {
             return ProductDatasourceImpl(productService)
+        }
+
+        @Provides
+        @Singleton
+        fun provideSupplierDatasource(supplierService: SupplierService): SupplierDatasource {
+            return SupplierDatasourceImpl(supplierService)
         }
     }
 
@@ -99,6 +113,12 @@ object MainModule {
         fun provideProductRepository(productDatasource: ProductDatasource): ProductRepository {
             return ProductRepositoryImpl(productDatasource)
         }
+
+        @Provides
+        @Singleton
+        fun provideSupplierRepository(supplierDatasource: SupplierDatasource): SupplierRepository {
+            return SupplierRepositoryImpl(supplierDatasource)
+        }
     }
 
     @Module
@@ -106,8 +126,15 @@ object MainModule {
     object ViewModelModule {
         @Provides
         @FragmentScoped
-        fun provideSplashViewModel(userPreferenceRepository: UserPreferenceRepository): SplashViewModel {
-            return BaseGenericViewModel(SplashViewModel(userPreferenceRepository)).create(
+        fun provideSplashViewModel(
+            userPreferenceRepository: UserPreferenceRepository,
+            productRepository: ProductRepository
+        ): SplashViewModel {
+            return BaseGenericViewModel(
+                SplashViewModel(
+                    userPreferenceRepository, productRepository
+                )
+            ).create(
                 SplashViewModel::class.java
             )
         }
@@ -146,9 +173,41 @@ object MainModule {
 
         @Provides
         @FragmentScoped
-        fun provideSupplierViewModel(productRepository: ProductRepository): SupplierViewModel {
-            return BaseGenericViewModel(SupplierViewModel(productRepository)).create(
+        fun provideDetailProductViewModel(productRepository: ProductRepository): DetailProductViewModel {
+            return BaseGenericViewModel(DetailProductViewModel(productRepository)).create(
+                DetailProductViewModel::class.java
+            )
+        }
+
+        @Provides
+        @FragmentScoped
+        fun provideAddProductViewModel(productRepository: ProductRepository): AddProductViewModel {
+            return BaseGenericViewModel(AddProductViewModel(productRepository)).create(
+                AddProductViewModel::class.java
+            )
+        }
+
+        @Provides
+        @FragmentScoped
+        fun provideSupplierViewModel(supplierRepository: SupplierRepository): SupplierViewModel {
+            return BaseGenericViewModel(SupplierViewModel(supplierRepository)).create(
                 SupplierViewModel::class.java
+            )
+        }
+
+        @Provides
+        @FragmentScoped
+        fun provideDetailSupplierViewModel(supplierRepository: SupplierRepository): DetailSupplierViewModel {
+            return BaseGenericViewModel(DetailSupplierViewModel(supplierRepository)).create(
+                DetailSupplierViewModel::class.java
+            )
+        }
+
+        @Provides
+        @FragmentScoped
+        fun provideAddSupplierViewModel(supplierRepository: SupplierRepository): AddSupplierViewModel {
+            return BaseGenericViewModel(AddSupplierViewModel(supplierRepository)).create(
+                AddSupplierViewModel::class.java
             )
         }
     }
