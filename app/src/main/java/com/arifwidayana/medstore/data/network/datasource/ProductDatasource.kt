@@ -35,7 +35,7 @@ class ProductDatasourceImpl @Inject constructor(
                 enablePlaceholders = false
             ),
             pagingSourceFactory = {
-                PagingDatasource(productService)
+                PagingProductDatasource(productService)
             }
         ).flow
     }

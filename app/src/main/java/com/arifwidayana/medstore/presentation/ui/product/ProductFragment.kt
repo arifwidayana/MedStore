@@ -2,6 +2,7 @@ package com.arifwidayana.medstore.presentation.ui.product
 
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
+import com.arifwidayana.medstore.R
 import com.arifwidayana.medstore.common.base.BaseFragment
 import com.arifwidayana.medstore.common.wrapper.Resource
 import com.arifwidayana.medstore.databinding.FragmentProductBinding
@@ -23,7 +24,9 @@ class ProductFragment : BaseFragment<FragmentProductBinding, ProductViewModel>(
 
     private fun onClick() {
         binding.apply {
-
+            fabAddProduct.setOnClickListener {
+                moveNav(R.id.action_productFragment_to_addProductFragment)
+            }
         }
     }
 
@@ -48,7 +51,10 @@ class ProductFragment : BaseFragment<FragmentProductBinding, ProductViewModel>(
         binding.apply {
             data?.let {
                 val adapter = ProductAdapter { res ->
-                    showMessageSnackBar(true, res.toString())
+                    moveNav(
+                        ProductFragmentDirections.actionProductFragmentToDetailProductFragment()
+                            .setId(res)
+                    )
                 }
                 adapter.submitData(lifecycle, it)
                 rvProduct.adapter = adapter
