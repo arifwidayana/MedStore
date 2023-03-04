@@ -5,6 +5,7 @@ import com.arifwidayana.medstore.common.base.BaseResponse
 import com.arifwidayana.medstore.common.utils.Constant.ID_PATH
 import com.arifwidayana.medstore.data.local.repository.UserPreferenceRepository
 import com.arifwidayana.medstore.data.network.model.request.product.ProductRequest
+import com.arifwidayana.medstore.data.network.model.request.product.add.AddProductRequest
 import com.arifwidayana.medstore.data.network.model.response.product.ProductResponse
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import kotlinx.coroutines.flow.first
@@ -24,7 +25,7 @@ import java.util.concurrent.TimeUnit
 
 interface ProductService {
     @POST("barang/create")
-    suspend fun postAddProduct(productRequest: ProductRequest): BaseResponse<ProductResponse>
+    suspend fun postAddProduct(@Body addProductRequest: AddProductRequest): BaseResponse<ProductResponse>
 
     @GET("barang/find-all")
     suspend fun getAllProduct(

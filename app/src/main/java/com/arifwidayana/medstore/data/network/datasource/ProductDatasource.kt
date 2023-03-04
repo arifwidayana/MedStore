@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import com.arifwidayana.medstore.common.base.BaseResponse
 import com.arifwidayana.medstore.common.utils.Constant.NETWORK_PAGE_SIZE
 import com.arifwidayana.medstore.data.network.model.request.product.ProductRequest
+import com.arifwidayana.medstore.data.network.model.request.product.add.AddProductRequest
 import com.arifwidayana.medstore.data.network.model.response.product.ProductParamResponse
 import com.arifwidayana.medstore.data.network.model.response.product.ProductResponse
 import com.arifwidayana.medstore.data.network.service.ProductService
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 interface ProductDatasource {
-    suspend fun postAddProduct(productRequest: ProductRequest): BaseResponse<ProductResponse>
+    suspend fun postAddProduct(addProductRequest: AddProductRequest): BaseResponse<ProductResponse>
     suspend fun getAllProduct(): Flow<PagingData<ProductParamResponse>>
     suspend fun getDetailProduct(idProduct: Int): BaseResponse<ProductResponse>
     suspend fun updateProduct(idProduct: Int, productRequest: ProductRequest): BaseResponse<ProductResponse>
@@ -23,8 +24,8 @@ interface ProductDatasource {
 class ProductDatasourceImpl @Inject constructor(
     private val productService: ProductService
 ): ProductDatasource {
-    override suspend fun postAddProduct(productRequest: ProductRequest): BaseResponse<ProductResponse> {
-        return productService.postAddProduct(productRequest)
+    override suspend fun postAddProduct(addProductRequest: AddProductRequest): BaseResponse<ProductResponse> {
+        return productService.postAddProduct(addProductRequest)
     }
 
     override suspend fun getAllProduct(): Flow<PagingData<ProductParamResponse>> {
