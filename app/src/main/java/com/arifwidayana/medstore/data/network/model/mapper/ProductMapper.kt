@@ -5,6 +5,8 @@ import com.arifwidayana.medstore.common.utils.mapper.ListMapper
 import com.arifwidayana.medstore.common.utils.mapper.ViewParamMapper
 import com.arifwidayana.medstore.data.network.model.request.product.ProductParamRequest
 import com.arifwidayana.medstore.data.network.model.request.product.ProductRequest
+import com.arifwidayana.medstore.data.network.model.request.product.add.AddProductParamRequest
+import com.arifwidayana.medstore.data.network.model.request.product.add.AddProductRequest
 import com.arifwidayana.medstore.data.network.model.response.product.ProductParamResponse
 import com.arifwidayana.medstore.data.network.model.response.product.ProductResponse
 
@@ -37,19 +39,35 @@ object SupplierViewParamMapper : ViewParamMapper<ProductResponse.Supplier, Produ
 object ProductRequestMapper: DataObjectMapper<ProductRequest, ProductParamRequest> {
     override fun toDataObject(viewParam: ProductParamRequest?): ProductRequest =
         ProductRequest(
-            id = viewParam?.id,
             productName = viewParam?.productName,
             price = viewParam?.price,
             stock = viewParam?.stock,
-            supplier = SupplierDataObjectMapper.toDataObject(viewParam?.supplier)
+            supplier = SupplierDataObjectMapper.toDataObject(viewParam)
         )
 }
 
-object SupplierDataObjectMapper : DataObjectMapper<ProductRequest.Supplier, ProductParamRequest.Supplier> {
-    override fun toDataObject(viewParam: ProductParamRequest.Supplier?): ProductRequest.Supplier =
+object SupplierDataObjectMapper : DataObjectMapper<ProductRequest.Supplier, ProductParamRequest> {
+    override fun toDataObject(viewParam: ProductParamRequest?): ProductRequest.Supplier =
         ProductRequest.Supplier(
+            supplierName = viewParam?.supplierName.orEmpty()
+        )
+}
+
+object AddProductRequestMapper: DataObjectMapper<AddProductRequest, AddProductParamRequest> {
+    override fun toDataObject(viewParam: AddProductParamRequest?): AddProductRequest =
+        AddProductRequest(
+            productName = viewParam?.productName,
+            price = viewParam?.price,
+            stock = viewParam?.stock,
+            supplier = AddSupplierDataObjectMapper.toDataObject(viewParam)
+        )
+}
+
+object AddSupplierDataObjectMapper : DataObjectMapper<AddProductRequest.Supplier, AddProductParamRequest> {
+    override fun toDataObject(viewParam: AddProductParamRequest?): AddProductRequest.Supplier =
+        AddProductRequest.Supplier(
             supplierName = viewParam?.supplierName.orEmpty(),
-            phoneNumber = viewParam?.phoneNumber.orEmpty(),
-            address = viewParam?.address.orEmpty()
+            supplierAddress = viewParam?.supplierAddress.orEmpty(),
+            supplierPhoneNumber = viewParam?.supplierPhoneNumber.orEmpty()
         )
 }

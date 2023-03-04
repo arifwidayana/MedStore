@@ -1,8 +1,8 @@
-package com.arifwidayana.medstore.data.network.model.request.product
+package com.arifwidayana.medstore.data.network.model.request.product.add
 
 import com.google.gson.annotations.SerializedName
 
-data class ProductRequest(
+data class AddProductRequest(
     @SerializedName("namaBarang")
     val productName: String?,
     @SerializedName("harga")
@@ -14,6 +14,10 @@ data class ProductRequest(
 ) {
     data class Supplier(
         @SerializedName("namaSupplier")
-        val supplierName: String?
+        val supplierName: String?,
+        @SerializedName("alamat")
+        val supplierAddress: String?,
+        @SerializedName("noTelp")
+        val supplierPhoneNumber: String?
     )
 }
